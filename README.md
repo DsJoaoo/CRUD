@@ -1,2 +1,2 @@
 # CRUD
-CRUD trabalho DW1
+trabalho DW1
