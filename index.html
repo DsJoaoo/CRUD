@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulário Moderno</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <table id="minhaTabela">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+    </tbody>
+  </table>
+
+  <div class="botoes-de-acao">
+    <button id="botaoEditar" disabled>Editar</button>
+    <button id="botaoExcluir" disabled>Excluir</button>
+  </div>
+</div>
+
+  <div class="container">
+    <form id="meuFormulario">
+      <div class="grupo-de-formulario">
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" name="nome" required>
+      </div>
+
+      <div class="grupo-de-formulario">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+
+      <div class="grupo-de-formulario">
+        <label for="telefone">Telefone:</label>
+        <input type="tel" id="telefone" name="telefone" required>
+      </div>
+
+      <div class="grupo-de-formulario">
+        <input type="submit" value="Enviar">
+      </div>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
