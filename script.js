@@ -2,6 +2,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const tabela = document.getElementById("minhaTabela");
   const botaoEditar = document.getElementById("botaoEditar");
   const botaoExcluir = document.getElementById("botaoExcluir");
+  const botaoOK = document.createElement("button");
+  botaoOK.textContent = "OK";
+  botaoOK.setAttribute("id", "botaoOK");
+  botaoOK.setAttribute("disabled", "disabled");
+  const botoesAcao = document.querySelector(".botoes-de-acao");
+  botoesAcao.appendChild(botaoOK);
+
   let linhaSelecionada = null;
 
   tabela.addEventListener("click", function (evento) {
@@ -17,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       botaoEditar.removeAttribute("disabled");
       botaoExcluir.removeAttribute("disabled");
+      botaoOK.removeAttribute("disabled");
     }
   });
 
@@ -34,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       botaoEditar.setAttribute("disabled", "disabled");
       botaoExcluir.setAttribute("disabled", "disabled");
+      botaoOK.removeAttribute("disabled");
     }
   });
 
@@ -44,19 +53,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
       botaoEditar.setAttribute("disabled", "disabled");
       botaoExcluir.setAttribute("disabled", "disabled");
+      botaoOK.setAttribute("disabled", "disabled");
     }
   });
 
-  tabela.addEventListener("blur", function (evento) {
-    if (linhaSelecionada && evento.target.tagName === "INPUT") {
-      const input = evento.target;
-      const celula = input.parentNode;
-      const valor = input.value;
-      celula.textContent = valor;
+  botaoOK.addEventListener("click", function () {
+    if (linhaSelecionada) {
+      const colunas = linhaSelecionada.cells;
+      const nome = colunas[0].querySelector("input").value;
+      const email = colunas[1].querySelector("input").value;
+      const telefone = colunas[2].querySelector("input").value;
 
+      colunas[0].textContent = nome;
+      colunas[1].textContent = email;
+      colunas[2].textContent = telefone;
+
+      linhaSelecionada.classList.remove("selecionado");
       linhaSelecionada = null;
+
       botaoEditar.removeAttribute("disabled");
       botaoExcluir.removeAttribute("disabled");
+      botaoOK.setAttribute("disabled", "disabled");
     }
   });
 
@@ -78,8 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
       linhaSelecionada.classList.remove("selecionado");
       linhaSelecionada = null;
 
-      botaoEditar.setAttribute("disabled", "disabled");
-      botaoExcluir.setAttribute("disabled", "disabled");
+      botaoEditar.removeAttribute("disabled");
+      botaoExcluir.removeAttribute("disabled");
+      botaoOK.setAttribute("disabled", "disabled");
     } else {
       const novaLinha = tabela.insertRow();
       const colunaNome = novaLinha.insertCell();
