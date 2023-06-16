@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const formulario = document.getElementById("meuFormulario");
   const tabela = document.getElementById("minhaTabela");
   const botaoEditar = document.getElementById("botaoEditar");
   const botaoExcluir = document.getElementById("botaoExcluir");
@@ -10,6 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   botoesAcao.appendChild(botaoOK);
 
   let linhaSelecionada = null;
+  let editarClicado = false; // Flag para verificar se o botão "Editar" foi clicado
 
   tabela.addEventListener("click", function (evento) {
     if (evento.target.tagName === "TD") {
@@ -24,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       botaoEditar.removeAttribute("disabled");
       botaoExcluir.removeAttribute("disabled");
-      botaoOK.removeAttribute("disabled");
+      botaoOK.setAttribute("disabled", "disabled");
     }
   });
 
@@ -43,6 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
       botaoEditar.setAttribute("disabled", "disabled");
       botaoExcluir.setAttribute("disabled", "disabled");
       botaoOK.removeAttribute("disabled");
+
+      editarClicado = true;
     }
   });
 
@@ -74,10 +78,10 @@ document.addEventListener("DOMContentLoaded", function () {
       botaoEditar.removeAttribute("disabled");
       botaoExcluir.removeAttribute("disabled");
       botaoOK.setAttribute("disabled", "disabled");
+
+      editarClicado = false;
     }
   });
-
-  const formulario = document.getElementById("meuFormulario");
 
   formulario.addEventListener("submit", function (evento) {
     evento.preventDefault();
@@ -86,19 +90,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = document.getElementById("email").value;
     const telefone = document.getElementById("telefone").value;
 
-    if (linhaSelecionada) {
-      const colunas = linhaSelecionada.cells;
-      colunas[0].textContent = nome;
-      colunas[1].textContent = email;
-      colunas[2].textContent = telefone;
-
+    if (linhaSelecionada || editarClicado) {
       linhaSelecionada.classList.remove("selecionado");
       linhaSelecionada = null;
+      editarClicado = false;
+      botaoEditar.dispatchEvent(new Event("click"));
 
       botaoEditar.removeAttribute("disabled");
       botaoExcluir.removeAttribute("disabled");
       botaoOK.setAttribute("disabled", "disabled");
-    } else {
+    }
       const novaLinha = tabela.insertRow();
       const colunaNome = novaLinha.insertCell();
       const colunaEmail = novaLinha.insertCell();
@@ -107,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
       colunaNome.textContent = nome;
       colunaEmail.textContent = email;
       colunaTelefone.textContent = telefone;
-    }
+
 
     formulario.reset();
   });
